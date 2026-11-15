@@ -2255,7 +2255,7 @@
      * Tempelkan URL Web App Google Apps Script Anda (yang berakhiran /exec)
      * di dalam tanda kutip DEFAULT_GAS_WEB_APP_URL di bawah ini:
      */
-    var DEFAULT_GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwEc3Kjrfowrdli7PuPLWiH09afyiUFSbgcwHVj9Ovvoe96EfKWthWCoDUeEnIecLCD/exec';
+    var DEFAULT_GAS_WEB_APP_URL = '';
     var GAS_API_URL_STORAGE_KEY = 'sipegut_gas_api_url_v19';
 
     function getActiveGasApiUrl() {
@@ -3440,13 +3440,15 @@
 
           for (var t = 0; t < topSlice.length; t++) {
             var st = topSlice[t];
+            var stRank = st.rank || (t + 1);
+            var isCatRankOne = (stRank === 1 && st.points > 0);
             topListHtml +=
               '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 0; border-bottom:1px dashed var(--border-color); font-size:0.8rem;">' +
-                '<span style="display:inline-flex; align-items:center; gap:7px; font-weight:' + (t === 0 && st.points > 0 ? '700' : '500') + '; color:var(--navy-900);">' +
+                '<span style="display:inline-flex; align-items:center; gap:7px; font-weight:' + (isCatRankOne ? '700' : '500') + '; color:var(--navy-900);">' +
                   renderTeacherAvatarHtml(st.nama, st.foto, 28) +
-                  '<span>' + (t + 1) + '. ' + escapeHtml(st.nama) + '</span>' +
+                  '<span>' + stRank + '. ' + escapeHtml(st.nama) + '</span>' +
                 '</span>' +
-                '<span class="badge ' + (t === 0 && st.points > 0 ? 'badge-emerald' : 'badge-slate') + '">' +
+                '<span class="badge ' + (isCatRankOne ? 'badge-emerald' : 'badge-slate') + '">' +
                   st.points + ' Suara (' + st.percentage + '%)' +
                 '</span>' +
               '</div>';
